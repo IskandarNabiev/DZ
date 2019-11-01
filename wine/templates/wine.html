@@ -1,0 +1,117 @@
+
+
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block style %}
+    <style type="text/css">
+    .properties_table{
+       min-height: 540px;
+       font-size: 14px;
+    }
+    </style>
+{% endblock %}
+{% block content %}
+    <section class="site_filter">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-2 col-2">
+                    <div class="form-group">
+                        <label for="country">Город</label>
+                        <select class="form-control" id="countries"
+                            url = "{%url 'wine:get_countries' %}">
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-2 col-2">
+                    <div class="form-group">
+                        <label for="Variety">ТО</label>
+                        <select class="form-control" id="variety"
+                            url = "{%url 'wine:get_varieties' %}">
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-2 col-2">
+                    <div class="form-group">
+                        <label for="Province">Группа показателей</label>
+                        <select class="form-control" id="province"
+                            url = "{%url 'wine:get_provinces' %}">
+                            <option value='all' selected>Все показатели</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-2 col-2">
+                    <div class="form-group">
+                        <label for="Region">Показатели</label>
+                        <select class="form-control" id="region" url = "{%url 'wine:get_regions' %}">
+                            <option value='all' selected>Поиск по значениям</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-2 col-2">
+                    <div class="form-group">
+                        <label for="Province">Сортировка</label>
+                        <select class="form-control" id="sort_by">
+                            <option selected="true"
+                            disabled="disabled" value = "none">Выбор</option>
+                            <option value='price'>Офис</option>
+                            <option value='points'>Значение</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-2 col-2">
+                    <div class="row justify-content-center align-self-center"
+                        style="color:white; margin-top:30px;">
+                        <a class="btn btn-secondary" id="display_all">Показать все</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br />
+    <section>
+        <div class="container-fluid">
+            <div id = "result-count" class="text-right">
+                <span class='font-weight-bold'></span> ошибка вывода.
+            </div>
+            <div class="row properties_table justify-content-center">
+                <div id = "no_results">
+                    <h5>No results found</h5>
+                </div>
+                <table class="table table-bordered table-responsive table-hover table-striped"
+                 id="list_data" data-toggle="table" url = "{% url 'wine:listing' %}">
+                    <thead>
+                        <tr>
+                            <th data-field="country">Месяц</th>
+                            <th data-field="taster_name">Город</th>
+                            <th data-field="title">ТО</th>
+                            <th data-field="description">Группа показателей</th>
+                            <th data-field="designation">Показатель</th>
+                            <th data-field="points">Офис</th>
+                            <th data-field="price">Значение</th>
+
+                        </tr>
+                    </thead>
+                    <tbody id="listing">
+                    </tbody>
+                </table>
+            </div>
+            <div class="row justify-content-center">
+                <nav aria-label="navigation">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <button class="btn btn-primary page-link" id="previous">Пред.</button>
+                        </li>
+                        <li class="page-item pull-right">
+                            <button class="btn btn-primary page-link" id="next">След.</button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block script %}
+    <script src="{% static 'js/wine.js' %}" type="text/javascript">
+    </script>
+{% endblock %}
+
